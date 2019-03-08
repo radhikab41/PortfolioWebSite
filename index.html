@@ -1,126 +1,439 @@
 <html>
-    <head>
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Graduate" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:600" rel="stylesheet">
-        <script>
-            function jobDetails( job){
-                document.alert(job);
-            }
-        </script>
-        <style>
+<head>
+    <!-- Compiled and minified CSS -->
+    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Graduate" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:600" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    <script>
+
+    </script>
+    <script>
+    function jobDetails(job){
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    //var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    var curtain = document.getElementById("curtain");
+    curtain.style.display ="block";
+    modal.style.display = "block";
+    var body = document.getElementById("body");
+    body.style.overflow = "hidden";
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    curtain.style.display ="none";
+    var body = document.getElementById("body");
+    body.style.overflow = "scroll";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+    modal.style.display = "none";
+    curtain.style.display ="none";
+    var body = document.getElementById("body");
+    body.style.overflow = "scroll";
+    }
+    }
+    }
+    </script>
+    <style>
+        :root {
+            background: #fff;
+        }
+
+        span #procent {
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            font-size: 50px;
+            transform: translate(-50%, -50%);
+            color: #3949AB;
+        }
+
+        span#procent::after {
+            content: '%';
+        }
+
+        .canvas-wrap {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        /* width: 100%; Full width */
+        height: 200%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .container {
+        display: flex;
+        width: 100%;
+        padding: 4% 2%;
+        box-sizing: border-box;
+        height: 100vh;
+        }
+
+        .box {
+        flex: 1;
+        overflow: hidden;
+        transition: .5s;
+        margin: 0 2%;
+        box-shadow: 0px 20px 30px rgba(0,0,0,.1);
+        line-height: 0;
+
+        }
+        .contact{
+        height: 30%;
+        }
+        .box > img {
+        width: 200%;
+        height: calc(100% - 10vh);
+        object-fit: cover; 
+        transition: .9s;
+        }
+
+        .box > span {
+        font-size: 3.8vh;
+        display: block;
+        text-align: center;
+        height: 10vh;
+        line-height: 2.6;
+        }
+
+
+        .box:hover { flex: 1 1 50%; }
+
+        .box:hover > img { width: 100%; height: 100%; }
+
+
+
+        /* Modal Content */
+        .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        }
+
+        /*-----modal done ----*/
         ::-webkit-scrollbar {
-            width: 12px;
-            background-color: white;
-	
-	background-image: -webkit-gradient(linear, 0 0, 0 100%,
-	                   color-stop(.5, rgba(255, 255, 255, .2)),
-					   color-stop(.5, transparent), to(transparent));
+        width: 12px;
+        background-color: white;
+
+        background-image: -webkit-gradient(linear, 0 0, 0 100%,
+        color-stop(.5, rgba(255, 255, 255, .2)),
+        color-stop(.5, transparent), to(transparent));
         }
-        
+
         ::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-            -webkit-box-shadow: inset 0 0 6px rgba(165, 7, 94, 0.3); 
-            border-radius: 10px;
-            background-color: #fff;
-	
-	background-image: -webkit-gradient(linear, 0 0, 0 100%,
-	                   color-stop(.5, rgba(255, 255, 255, .2)),
-					   color-stop(.5, transparent), to(transparent));
+        box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+        -webkit-box-shadow: inset 0 0 6px rgba(165, 7, 94, 0.3); 
+        border-radius: 10px;
+        background-color: #fff;
+
+        background-image: -webkit-gradient(linear, 0 0, 0 100%,
+        color-stop(.5, rgba(255, 255, 255, .2)),
+        color-stop(.5, transparent), to(transparent));
         }
-        
+
         ::-webkit-scrollbar-thumb {
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-            border-radius: 10px;
-            -webkit-box-shadow: inset 0 0 6px rgba(201, 7, 7, 0.5); 
-            background-color: #0ae;
-	
-	background-image: -webkit-gradient(linear, 0 0, 0 100%,
-	                   color-stop(.5, rgba(255, 255, 255, .2)),
-					   color-stop(.5, transparent), to(transparent));
+        box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(201, 7, 7, 0.5); 
+        background-color: #0ae;
+
+        background-image: -webkit-gradient(linear, 0 0, 0 100%,
+        color-stop(.5, rgba(255, 255, 255, .2)),
+        color-stop(.5, transparent), to(transparent));
         }
-            body{
-                background-image: url(rockywall.png);
-            }
+        body{
+        background-image: url(rockywall.png);
+        }
         .landing{
-            font-family: 'Montserrat Alternates', sans-serif;
-            text-align: center;
-            vertical-align: -webkit-baseline-middle;
-            height:100%;
-            width:100%;
+        font-family: 'Montserrat Alternates', sans-serif;
+        text-align: center;
+        vertical-align: -webkit-baseline-middle;
+        height:100%;
+        width:100%;
 
         }
         .landing h5{
-            color: #ff6666;
+        color: #ff6666;
         }
         /* .landing h3{
-            margin-left : auto;
-            margin-right : auto;
-           
+        margin-left : auto;
+        margin-right : auto;
+
         } */
         .work{
-            height: 100%;
-            background-color: rgb(40, 44, 52);
+        height: 100%;
+        background-color: rgb(40, 44, 52);
 
         }
 
         #workplace{
-            float:left;
-            border:1px solid #fff;
-            border-radius: 15%;
-            padding:5%;
+        float:left;
+        border:1px solid #fff;
+        border-radius: 15%;
+        padding:5%;
         }
 
         #workHeading{
-           
-            color:rgb(209,124,68);
+
+        color:rgb(209,124,68);
         }
         #workplace{
-            color:rgb(171,178,191);
-            width: 30%;
-            height: 50%;
+        color:rgb(171,178,191);
+        width: 30%;
+        height: 50%;
         }
         #role{
-            color:rgb(181,230,29);
+        color:rgb(181,230,29);
         }
-        </style>
-                
-    </head>
-    <body>
-        <div class="landing"> 
-            <!-- <ul>
-                <li></li>
-                
-            </ul> -->
-            <h3>Hi ! My name is Radhika</h3>
-            <h5>Software Developer</h5>
-        </div>
-        <div class="work">
-            <div id="workHeading"><h3>Work Experience</h3></div>
+        .fact:hover {
+        background-color: rgba(255,255,255,0.5);
+        }
+        #curtain{
+        display: none;
+        height:100%;
+        width:100%;
+        background-color: rgba(0,0,0,1);
+        }
 
-            <div onclick=jobDetails(fact) id="workplace" class="fact">
-                <h5 id="place">FACT Lab, Arizona State University :</h5><h5 id="role"> Backend Java Developer</h5>
-            </div>
+        .Project{
+        height:200%;
+        background-image: url("concrete.png");
 
-            <div  onclick=jobDetails(fidelity)  id="workplace" class="Fidelity">
-                <h5 id="place">Fidelity Investments :</h5><h5 id="role"> Associate Software Engineer</h5>
-            </div>
+        }
+        .merc{
+        height:40%;
+        padding-top:3%;
+        padding-left:3%;
+        margin: 0px;
 
-        </div>
-        <div class="Project">
-            <div class="merc"></div>
-            <div class="UnityGame"></div>
-            <div class="istoryline"></div>
-            <div class="mobileApp"></div>
-        </div>
-        <div class="skill">
+        background-color:  white;
 
-        </div>
-        <div class="contact"></div>
+        }
+        .progress-meter text {
+        font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        }
 
-    </body>
+        .merc #view{
+        float: left;
+        box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.5);
+        width: 40%;
+        height: 65%;
+        background-image: url("dashboard.png");
+        background-size: 100%;
+        }
+        .merc #content{
+        overflow: auto;
+        padding-left:30px;
+        height:100%;
+        border:1px solid #000;
+        }
+        .UnityGame{
+        height:50%;
+        padding:0px;
+        margin: 0px;
+        background-color: white;
+        }
+        .UnityGame #content{
+        float: left;
+        height:100%;
+        width:50%;
+        padding-left:30px;
+
+        border:1px solid #000;
+        }
+        .UnityGame #view{
+        float: left;
+        overflow: auto;
+        box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.5);
+        width: 33%;
+        height: 38%;
+        margin-left:15%;
+        background-image: url("pong.jpg");
+        background-size: 100%;
+        }
+        #proj{
+        border:1px solid #000;
+        height: 25%;
+        }
+
+        .istoryline #view{
+        float: left;
+        overflow: auto;
+        box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.5);
+        width: 40%;
+        height: 60%;
+
+        background-image: url("dv.png");
+        background-size: 100%;
+        }
+
+        .skill{
+        height:100%;
+        background-color: rgba(224, 184, 6,1);
+        background-image: none;
+        }
+    </style>
+
+</head>
+<body id="body">
+    <div id="curtain"></div>
+    <div class="landing"> 
+    <!-- <ul>
+    <li></li>
+
+    </ul> -->
+    <h3>Hi ! My name is Radhika</h3>
+    <h5>Software Developer</h5>
+    </div>
+    <div class="work">
+    <div id="workHeading"><h3>Work Experience</h3></div>
+
+    <div onclick="jobDetails('fact')" id="workplace" class="fact">
+    <h5 id="place">FACT Lab, Arizona State University :</h5><h5 id="role"> Backend Java Developer</h5>
+    </div>
+    <!-- <div class="jobDetail">
+    <h1>FACT LAB</h1>
+    </div> -->
+
+
+
+
+    <div  onclick=jobDetails(fidelity)  id="workplace" class="Fidelity">
+    <h5 id="place">Fidelity Investments :</h5><h5 id="role"> Associate Software Engineer</h5>
+    </div>
+
+    </div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+    </div>
+
+    </div>
+    <div class="Project">
+    <div class="container">
+    <div class="box">
+    <img src="dashboard.png">
+    <span>Mercedes Design Challenge</span>
+    </div>
+    <div class="box">
+    <img src="dv.png">
+    <span>istoryline</span>
+    </div>
+
+    <div class="box">
+    <img src="pong.jpg">
+    <span>Game Development</span>
+    </div>
+    <div class="box">   
+    <img src="mobile.png">
+    <span>Mobile Development</span>
+    </div>
+    </div>
+
+    <div class="skill">
+    <script>
+
+    window.onload = function() {
+    var can = document.getElementById('canvas'),
+    spanProcent = document.getElementById('procent'),
+    c = can.getContext('2d');
+
+    var posX = can.width / 2,
+    posY = can.height / 2,
+    fps = 1000 / 200,
+    procent = 0,
+    oneProcent = 360 / 100,
+    result = oneProcent * 64;
+
+    c.lineCap = 'round';
+    arcMove();
+
+    function arcMove(){
+    var deegres = 0;
+    var acrInterval = setInterval (function() {
+    deegres += 1;
+    c.clearRect( 0, 0, can.width, can.height );
+    procent = deegres / oneProcent;
+
+    spanProcent.innerHTML = procent.toFixed();
+
+    c.beginPath();
+    c.arc( posX, posY, 70, (Math.PI/180) * 270, (Math.PI/180) * (270 + 360) );
+    c.strokeStyle = '#b1b1b1';
+    c.lineWidth = '10';
+    c.stroke();
+
+    c.beginPath();
+    c.strokeStyle = '#3949AB';
+    c.lineWidth = '10';
+    c.arc( posX, posY, 70, (Math.PI/180) * 270, (Math.PI/180) * (270 + deegres) );
+    c.stroke();
+    if( deegres >= result ) clearInterval(acrInterval);
+    }, fps);
+
+    }
+
+
+    }
+    </script>
+    <div class="canvas-wrap">
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <span id="procent"></span>
+    </div>
+
+
+    </div>
+    <div class="contact"></div>
+
+</body>
 </html>
